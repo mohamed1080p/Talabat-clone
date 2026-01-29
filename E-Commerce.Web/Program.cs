@@ -1,5 +1,7 @@
 
+using Domain.Contracts;
 using Microsoft.EntityFrameworkCore;
+using persistence;
 using persistence.Data;
 
 namespace E_Commerce.Web
@@ -20,15 +22,21 @@ namespace E_Commerce.Web
             {
                 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
             });
+            builder.Services.AddScoped<IDataSeeding, DataSeeding>();
 
             var app = builder.Build();
-
-            // Configure the HTTP request pipeline.
-            if (app.Environment.IsDevelopment())
+            using (var scope=app.Services.CreateScope())
             {
-                app.UseSwagger();
-                app.UseSwaggerUI();
+                var dataseed=scope.ServiceProvider.GetRequiredService<IDataSeeding>();
+                dataseed.DataSeed();
             }
+
+                // Configure the HTTP request pipeline.
+                if (app.Environment.IsDevelopment())
+                {
+                    app.UseSwagger();
+                    app.UseSwaggerUI();
+                }
 
             app.UseHttpsRedirection();
 
