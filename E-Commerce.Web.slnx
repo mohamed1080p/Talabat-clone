@@ -1,0 +1,13 @@
+<Solution>
+  <Folder Name="/Core/">
+    <Project Path="Core/Domain/Domain.csproj" Id="793b08d9-ad77-4496-9fa9-d18b0c7d5187" />
+    <Project Path="Core/Service/Service.csproj" Id="3fbc178e-520b-4386-800d-d673d43cf13f" />
+    <Project Path="Core/ServiceAbstraction/ServiceAbstraction.csproj" Id="8ab451d8-89cf-44b9-8422-7762a95dfee0" />
+  </Folder>
+  <Folder Name="/Infrastructure/">
+    <Project Path="Infrastructure/Presentation/Presentation.csproj" Id="768fb7f8-0ce4-4185-a63f-04f607952244" />
+    <Project Path="Infrastructure/Presistence/Presistence.csproj" Id="cc245b5a-5f45-420e-b255-adebf33d105e" />
+  </Folder>
+  <Project Path="E-Commerce.Web/E-Commerce.Web.csproj" />
+  <Project Path="Shared/Shared.csproj" Id="e3c470c4-3e56-4bcd-8a59-02dc93fb8b79" />
+</Solution>
