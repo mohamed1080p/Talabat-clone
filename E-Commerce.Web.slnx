@@ -6,7 +6,7 @@
   </Folder>
   <Folder Name="/Infrastructure/">
     <Project Path="Infrastructure/Presentation/Presentation.csproj" Id="768fb7f8-0ce4-4185-a63f-04f607952244" />
-    <Project Path="Infrastructure/Presistence/Presistence.csproj" Id="cc245b5a-5f45-420e-b255-adebf33d105e" />
+    <Project Path="Infrastructure/Presistence/persistence.csproj" Id="cc245b5a-5f45-420e-b255-adebf33d105e" />
   </Folder>
   <Project Path="E-Commerce.Web/E-Commerce.Web.csproj" />
   <Project Path="Shared/Shared.csproj" Id="e3c470c4-3e56-4bcd-8a59-02dc93fb8b79" />
