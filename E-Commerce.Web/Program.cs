@@ -2,9 +2,11 @@
 using AutoMapper;
 using Domain.Contracts;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 using persistence;
 using persistence.Data;
 using persistence.Repositories;
+using Service.MappingProfiles;
 using System.Threading.Tasks;
 
 namespace E_Commerce.Web
@@ -27,7 +29,7 @@ namespace E_Commerce.Web
             });
             builder.Services.AddScoped<IDataSeeding, DataSeeding>();
             builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
-            builder.Services.AddScoped<IMapper, Mapper>();
+            builder.Services.AddAutoMapper(a => a.AddProfile(new ProductProfile()));
 
             var app = builder.Build();
             using (var scope=app.Services.CreateScope())
