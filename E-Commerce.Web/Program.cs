@@ -6,7 +6,9 @@ using Microsoft.Extensions.DependencyInjection;
 using persistence;
 using persistence.Data;
 using persistence.Repositories;
+using Service;
 using Service.MappingProfiles;
+using ServiceAbstraction;
 using System.Threading.Tasks;
 
 namespace E_Commerce.Web
@@ -30,6 +32,7 @@ namespace E_Commerce.Web
             builder.Services.AddScoped<IDataSeeding, DataSeeding>();
             builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
             builder.Services.AddAutoMapper(a => a.AddProfile(new ProductProfile()));
+            builder.Services.AddScoped<IServiceManager, ServiceManager>();
 
             var app = builder.Build();
             using (var scope=app.Services.CreateScope())
