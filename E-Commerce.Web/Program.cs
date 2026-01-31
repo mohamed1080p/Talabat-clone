@@ -3,12 +3,13 @@ using Domain.Contracts;
 using Microsoft.EntityFrameworkCore;
 using persistence;
 using persistence.Data;
+using System.Threading.Tasks;
 
 namespace E_Commerce.Web
 {
     public class Program
     {
-        public static void Main(string[] args)
+        public static async Task Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
 
@@ -28,7 +29,7 @@ namespace E_Commerce.Web
             using (var scope=app.Services.CreateScope())
             {
                 var dataseed=scope.ServiceProvider.GetRequiredService<IDataSeeding>();
-                dataseed.DataSeed();
+                await dataseed.DataSeedAsync();
             }
 
                 // Configure the HTTP request pipeline.
