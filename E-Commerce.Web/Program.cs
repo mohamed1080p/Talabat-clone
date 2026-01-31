@@ -1,8 +1,10 @@
 
+using AutoMapper;
 using Domain.Contracts;
 using Microsoft.EntityFrameworkCore;
 using persistence;
 using persistence.Data;
+using persistence.Repositories;
 using System.Threading.Tasks;
 
 namespace E_Commerce.Web
@@ -24,6 +26,8 @@ namespace E_Commerce.Web
                 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
             });
             builder.Services.AddScoped<IDataSeeding, DataSeeding>();
+            builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+            builder.Services.AddScoped<IMapper, Mapper>();
 
             var app = builder.Build();
             using (var scope=app.Services.CreateScope())
