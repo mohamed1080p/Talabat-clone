@@ -33,6 +33,8 @@ namespace E_Commerce.Web
             builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
             builder.Services.AddAutoMapper(a => a.AddProfile(new ProductProfile()));
             builder.Services.AddScoped<IServiceManager, ServiceManager>();
+            builder.Services.AddScoped<PictureUrlResolver>();
+
 
             var app = builder.Build();
             using (var scope=app.Services.CreateScope())
@@ -49,6 +51,7 @@ namespace E_Commerce.Web
                 }
 
             app.UseHttpsRedirection();
+            app.UseStaticFiles();
 
             app.UseAuthorization();
 
