@@ -21,6 +21,15 @@ namespace Domain.Contracts
 
         //remove
         void Remove(TEntity entity);
-        
+
+
+
+        // get all specifications
+
+        Task<IEnumerable<TEntity>> GetAllAsync(ISpecifications<TEntity,TKey> specifications);
+
+        // get by ID specifications
+        Task<TEntity?> GetByIdAsync(ISpecifications<TEntity, TKey> specifications);
+
     }
 }
