@@ -1,4 +1,5 @@
 ﻿
+using Shared;
 using Shared.DataTransferedObjects;
 
 namespace ServiceAbstraction
@@ -6,7 +7,7 @@ namespace ServiceAbstraction
     public interface IProductService
     {
         // get all products
-        Task<IEnumerable<ProductDTO>> GetAllProductsAsync(int? BrandId, int? TypeId);
+        Task<IEnumerable<ProductDTO>> GetAllProductsAsync(int? BrandId, int? TypeId, ProductSortingOptions sortingOptions);
 
         // get product by Id
         Task<ProductDTO> GetProductByIdAsync(int Id);
