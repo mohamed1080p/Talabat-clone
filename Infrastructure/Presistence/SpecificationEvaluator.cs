@@ -32,6 +32,12 @@ namespace persistence
             {
                 Query = specifications.IncludeExpressions.Aggregate(Query, (CurrentQuery, IncludeExp) => CurrentQuery.Include(IncludeExp));
             }
+
+            if(specifications.IsPaginated==true)
+            {
+                Query = Query.Skip(specifications.Skip).Take(specifications.Take);
+            }
+
             return Query;
         }
     }
