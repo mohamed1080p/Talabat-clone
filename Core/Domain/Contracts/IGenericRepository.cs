@@ -31,5 +31,8 @@ namespace Domain.Contracts
         // get by ID specifications
         Task<TEntity?> GetByIdAsync(ISpecifications<TEntity, TKey> specifications);
 
+        // count 
+        Task<int> CountAsync(ISpecifications<TEntity, TKey> specifications);
+
     }
 }

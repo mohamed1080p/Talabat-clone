@@ -7,7 +7,7 @@ namespace ServiceAbstraction
     public interface IProductService
     {
         // get all products
-        Task<IEnumerable<ProductDTO>> GetAllProductsAsync(ProductQueryParams queryParams);
+        Task<PaginatedResult<ProductDTO>> GetAllProductsAsync(ProductQueryParams queryParams);
 
         // get product by Id
         Task<ProductDTO> GetProductByIdAsync(int Id);
