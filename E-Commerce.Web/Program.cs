@@ -2,6 +2,7 @@
 using AutoMapper;
 using Domain.Contracts;
 using E_Commerce.Web.CustomMiddleWares;
+using E_Commerce.Web.Extensions;
 using E_Commerce.Web.Factories;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -24,39 +25,33 @@ namespace E_Commerce.Web
             var builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.
-
             builder.Services.AddControllers();
-            // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-            builder.Services.AddEndpointsApiExplorer();
-            builder.Services.AddSwaggerGen();
-            builder.Services.AddDbContext<StoreDbContext>(options =>
-            {
-                options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
-            });
-            builder.Services.AddScoped<IDataSeeding, DataSeeding>();
-            builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
-            builder.Services.AddAutoMapper(a => a.AddProfile(new ProductProfile()));
-            builder.Services.AddScoped<IServiceManager, ServiceManager>();
+
+            // Add Swagger Services 
+            builder.Services.AddSwaggerServices();
+
+            // Services in Project "Presistence" in Folder "Infrastructure"
+            builder.Services.AddInfrastructureServices(builder.Configuration);
+
+            // Services in project "Service"
+            builder.Services.AddApplicationServices();
             builder.Services.AddScoped<PictureUrlResolver>();
-            builder.Services.Configure<ApiBehaviorOptions>((options) =>
-            {
-                options.InvalidModelStateResponseFactory = ApiResponseFactory.GenerateApiValidationErrorResponse;
-            });
+
+            // Add Web Application Services
+            builder.Services.AddWebApplicationServices();
 
 
             var app = builder.Build();
-            using (var scope=app.Services.CreateScope())
-            {
-                var dataseed=scope.ServiceProvider.GetRequiredService<IDataSeeding>();
-                await dataseed.DataSeedAsync();
-            }
 
-            app.UseMiddleware<CustomExceptionHandlerMiddleWare>();
+            await app.SeedDataBaseAsync();
+
+            // Use Custom Exception MiddleWare
+            app.UseCustomExceptionMiddleWare();
+
                 // Configure the HTTP request pipeline.
                 if (app.Environment.IsDevelopment())
                 {
-                    app.UseSwagger();
-                    app.UseSwaggerUI();
+                   app.UseSwaggerMiddleWares();
                 }
 
             app.UseHttpsRedirection();
