@@ -2,6 +2,8 @@
 using AutoMapper;
 using Domain.Contracts;
 using E_Commerce.Web.CustomMiddleWares;
+using E_Commerce.Web.Factories;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using persistence;
@@ -10,6 +12,7 @@ using persistence.Repositories;
 using Service;
 using Service.MappingProfiles;
 using ServiceAbstraction;
+using Shared.ErrorModels;
 using System.Threading.Tasks;
 
 namespace E_Commerce.Web
@@ -35,7 +38,10 @@ namespace E_Commerce.Web
             builder.Services.AddAutoMapper(a => a.AddProfile(new ProductProfile()));
             builder.Services.AddScoped<IServiceManager, ServiceManager>();
             builder.Services.AddScoped<PictureUrlResolver>();
-
+            builder.Services.Configure<ApiBehaviorOptions>((options) =>
+            {
+                options.InvalidModelStateResponseFactory = ApiResponseFactory.GenerateApiValidationErrorResponse;
+            });
 
 
             var app = builder.Build();
