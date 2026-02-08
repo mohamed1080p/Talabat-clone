@@ -1,6 +1,7 @@
 
 using AutoMapper;
 using Domain.Contracts;
+using E_Commerce.Web.CustomMiddleWares;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using persistence;
@@ -36,6 +37,7 @@ namespace E_Commerce.Web
             builder.Services.AddScoped<PictureUrlResolver>();
 
 
+
             var app = builder.Build();
             using (var scope=app.Services.CreateScope())
             {
@@ -43,6 +45,7 @@ namespace E_Commerce.Web
                 await dataseed.DataSeedAsync();
             }
 
+            app.UseMiddleware<CustomExceptionHandlerMiddleWare>();
                 // Configure the HTTP request pipeline.
                 if (app.Environment.IsDevelopment())
                 {
