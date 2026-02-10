@@ -1,5 +1,4 @@
-﻿
-namespace Shared.DataTransferedObjects
+﻿namespace Shared.DataTransferedObjects.ProductModuleDTOs
 {
     public class ProductDTO
     {

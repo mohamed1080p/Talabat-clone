@@ -1,6 +1,6 @@
 ﻿
 using Shared;
-using Shared.DataTransferedObjects;
+using Shared.DataTransferedObjects.ProductModuleDTOs;
 
 namespace ServiceAbstraction
 {

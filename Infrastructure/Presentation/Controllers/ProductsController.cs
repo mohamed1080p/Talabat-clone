@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using ServiceAbstraction;
 using Shared;
-using Shared.DataTransferedObjects;
+using Shared.DataTransferedObjects.ProductModuleDTOs;
 
 namespace Presentation.Controllers
 {

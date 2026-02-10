@@ -6,7 +6,7 @@ using Domain.Models.ProductModule;
 using Service.Specifications;
 using ServiceAbstraction;
 using Shared;
-using Shared.DataTransferedObjects;
+using Shared.DataTransferedObjects.ProductModuleDTOs;
 
 namespace Service
 {

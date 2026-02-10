@@ -1,7 +1,7 @@
 ﻿
 using AutoMapper;
 using Domain.Models.ProductModule;
-using Shared.DataTransferedObjects;
+using Shared.DataTransferedObjects.ProductModuleDTOs;
 
 namespace Service.MappingProfiles
 {
