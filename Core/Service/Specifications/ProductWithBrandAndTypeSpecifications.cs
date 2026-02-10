@@ -1,5 +1,4 @@
-﻿
-using Domain.Models;
+﻿using Domain.Models.ProductModule;
 using Shared;
 
 namespace Service.Specifications

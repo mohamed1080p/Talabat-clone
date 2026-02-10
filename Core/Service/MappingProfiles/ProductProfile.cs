@@ -1,6 +1,6 @@
 ﻿
 using AutoMapper;
-using Domain.Models;
+using Domain.Models.ProductModule;
 using Shared.DataTransferedObjects;
 
 namespace Service.MappingProfiles
