@@ -1,13 +1,19 @@
 ﻿
 using Domain.Contracts;
+using Domain.Models.IdentityModule;
 using Domain.Models.ProductModule;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using persistence.Data;
+using persistence.Identity;
 using System.Text.Json;
 
 namespace persistence
 {
-    public class DataSeeding(StoreDbContext _dbContext) : IDataSeeding
+    public class DataSeeding(StoreDbContext _dbContext, 
+        UserManager<ApplicationUser> _userManager, 
+        RoleManager<IdentityRole> _roleManager,
+        StoreIdentityDbContext _identityDbContext) : IDataSeeding
     {
         public async Task DataSeedAsync()
         {
@@ -52,6 +58,45 @@ namespace persistence
 			{
 
 			}
+        }
+
+        public async Task IdentityDataSeedAsync()
+        {
+            try
+            {
+                if (!_roleManager.Roles.Any())
+                {
+                    await _roleManager.CreateAsync(new IdentityRole("Admin"));
+                    await _roleManager.CreateAsync(new IdentityRole("SuperAdmin"));
+                }
+                if (!_userManager.Users.Any())
+                {
+                    var user01 = new ApplicationUser()
+                    {
+                        Email = "mohamed@gmail.com",
+                        DisplayName = "Mohamed Bahaa",
+                        PhoneNumber = "0123456789",
+                        UserName = "mohamed1080p"
+                    };
+                    var user02 = new ApplicationUser()
+                    {
+                        Email = "ahmed@gmail.com",
+                        DisplayName = "Ahmed",
+                        PhoneNumber = "0123456789",
+                        UserName = "ahmed1080p"
+                    };
+                    await _userManager.CreateAsync(user01, "P@ssw0rd");
+                    await _userManager.CreateAsync(user02, "P@ssw0rd");
+                    await _userManager.AddToRoleAsync(user01, "SuperAdmin");
+                    await _userManager.AddToRoleAsync(user02, "Admin");
+                }
+                await _identityDbContext.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+
+                
+            }
         }
     }
 }
