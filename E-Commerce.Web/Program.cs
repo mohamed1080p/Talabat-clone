@@ -24,22 +24,13 @@ namespace E_Commerce.Web
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            // Add services to the container.
             builder.Services.AddControllers();
-
-            // Add Swagger Services 
             builder.Services.AddSwaggerServices();
-
-            // Services in Project "Presistence" in Folder "Infrastructure"
             builder.Services.AddInfrastructureServices(builder.Configuration);
-
-            // Services in project "Service"
             builder.Services.AddApplicationServices();
             builder.Services.AddScoped<PictureUrlResolver>();
-
-            // Add Web Application Services
             builder.Services.AddWebApplicationServices();
-
+            builder.Services.AddJWTService(builder.Configuration);
 
             var app = builder.Build();
 
@@ -56,6 +47,9 @@ namespace E_Commerce.Web
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
+            app.UseRouting();
+            app.UseAuthentication();
+            app.UseAuthorization();
 
             app.UseAuthorization();
 
