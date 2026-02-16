@@ -36,7 +36,7 @@ namespace Presentation.Controllers
         [HttpGet("CurrentUser")]
         public async Task<ActionResult<UserDTO>> GetCurrentUser()
         {
-            var email = User.FindFirstValue(ClaimTypes.Email);
+            var email = GetEmailFromToken();
             var AppUser = await _serviceManager.AuthenticationService.GetCurrentUserAsync(email!);
             return Ok(AppUser);
         }
@@ -46,7 +46,7 @@ namespace Presentation.Controllers
         [HttpGet("Address")]
         public async Task<ActionResult<AddressDTO>> GetCurrentUserAddress()
         {
-            var email = User.FindFirstValue(ClaimTypes.Email);
+            var email = GetEmailFromToken();
             var Address = await _serviceManager.AuthenticationService.GetCurrentaUserAddresAsync(email!);
             return Ok(Address);
         }
@@ -56,7 +56,7 @@ namespace Presentation.Controllers
         [HttpPut("Address")]
         public async Task<ActionResult<AddressDTO>> UpdateCurrentUserAddress(AddressDTO addressDTO)
         {
-            var email = User.FindFirstValue(ClaimTypes.Email);
+            var email = GetEmailFromToken();
             var UpdatedAddress = await _serviceManager.AuthenticationService.UpdateCurrentUserAddressAsync(email!, addressDTO);
             return Ok(UpdatedAddress);
         }

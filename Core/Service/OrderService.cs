@@ -4,6 +4,7 @@ using Domain.Contracts;
 using Domain.Exceptions;
 using Domain.Models.OrderModule;
 using Domain.Models.ProductModule;
+using Services.Specifications.OrderModuleSpecifications;
 using ServicesAbstraction;
 using Shared.DataTransferedObjects.IdentityDTOs;
 using Shared.DataTransferedObjects.OrderDTOs;
@@ -12,7 +13,7 @@ namespace Services
 {
     public class OrderService(IMapper _mapper, IBasketRepository _basketRepository, IUnitOfWork _unitOfWork) : IOrderService
     {
-        public async Task<OrderToReturnDTO> CreateOrder(OrderDTO orderDTO, string Email)
+        public async Task<OrderToReturnDTO> CreateOrderAsync(OrderDTO orderDTO, string Email)
         {
             // map AddressDTO to OrderAddress
             var OrderAddress = _mapper.Map<AddressDTO, OrderAddress>(orderDTO.Address);
@@ -48,6 +49,26 @@ namespace Services
             await _unitOfWork.SaveChanges();
 
             return _mapper.Map<Order, OrderToReturnDTO>(order);
+        }
+
+        public async Task<IEnumerable<OrderToReturnDTO>> GetAllOrdersAsync(string Email)
+        {
+            var Specifications = new OrderSpecifications(Email);
+            var Orders = await _unitOfWork.GetRepository<Order, Guid>().GetAllAsync(Specifications);
+            return _mapper.Map<IEnumerable<Order>, IEnumerable<OrderToReturnDTO>>(Orders);
+        }
+
+        public async Task<IEnumerable<DeliveryMethodDTO>> GetDeliveryMethodsAsync()
+        {
+            var DeliveryMethods = await _unitOfWork.GetRepository<DeliveryMethod, int>().GetAllAsync();
+            return _mapper.Map<IEnumerable<DeliveryMethod>, IEnumerable<DeliveryMethodDTO>>(DeliveryMethods);
+        }
+
+        public async Task<OrderToReturnDTO> GetOrderByIdAsync(Guid Id)
+        {
+            var Specifications = new OrderSpecifications(Id);
+            var Order = await _unitOfWork.GetRepository<Order, Guid>().GetByIdAsync(Specifications);
+            return _mapper.Map<Order, OrderToReturnDTO>(Order);
         }
     }
 }
