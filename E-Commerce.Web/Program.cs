@@ -33,7 +33,6 @@ namespace E_Commerce.Web
             builder.Services.AddJWTService(builder.Configuration);
 
             var app = builder.Build();
-
             await app.SeedDataBaseAsync();
 
             // Use Custom Exception MiddleWare
@@ -50,12 +49,7 @@ namespace E_Commerce.Web
             app.UseRouting();
             app.UseAuthentication();
             app.UseAuthorization();
-
-            app.UseAuthorization();
-
-
             app.MapControllers();
-
             app.Run();
         }
     }

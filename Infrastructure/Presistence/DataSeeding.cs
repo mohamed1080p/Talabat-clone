@@ -1,6 +1,7 @@
 ﻿
 using Domain.Contracts;
 using Domain.Models.IdentityModule;
+using Domain.Models.OrderModule;
 using Domain.Models.ProductModule;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -32,7 +33,6 @@ namespace persistence
                        await _dbContext.ProductBrands.AddRangeAsync(brands);
                     }
                 }
-
                 if (!_dbContext.Products.Any())
                 {
                     var products = File.OpenRead("..\\Infrastructure\\Presistence\\DataSeedFiles\\products.json");
@@ -42,7 +42,6 @@ namespace persistence
                         await _dbContext.Products.AddRangeAsync(productsdata);
                     }
                 }
-
                 if (!_dbContext.ProductTypes.Any())
                 {
                     var productTypes = File.OpenRead("..\\Infrastructure\\Presistence\\DataSeedFiles\\types.json");
@@ -50,6 +49,15 @@ namespace persistence
                     if (types is not null && types.Any())
                     {
                         await _dbContext.ProductTypes.AddRangeAsync(types);
+                    }
+                }
+                if (!_dbContext.Set<DeliveryMethod>().Any())
+                {
+                    var DeliveryMethodDataStream = File.OpenRead("..\\Infrastructure\\Presistence\\DataSeedFiles\\delivery.json");
+                    var DeliveryMethods = await JsonSerializer.DeserializeAsync<List<DeliveryMethod>>(DeliveryMethodDataStream);
+                    if (DeliveryMethods is not null && DeliveryMethods.Any())
+                    {
+                        await _dbContext.Set<DeliveryMethod>().AddRangeAsync(DeliveryMethods);
                     }
                 }
                 await _dbContext.SaveChangesAsync();
